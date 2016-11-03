@@ -13,9 +13,10 @@ public class PatternParser {
 
     private static Map<String, TokenParsingFunction> tokenParsers = new HashMap<>();
     private static boolean initialized = false;
+    private static boolean loadDefaultParsers = true;
 
-    private static void addDefaultTokenParsers() {
-
+    public static void shouldLoadDefaultParsers(boolean val) {
+        loadDefaultParsers = val;
     }
 
     public static void addTokenParser(String tokenType, TokenParsingFunction parsingFunction) throws InvalidTokenParserException {
@@ -36,7 +37,7 @@ public class PatternParser {
     }
 
     public static ResultPacket parse(String stringToParse, TokenPattern tokenPattern, boolean trunc) throws TokenParseMismatchException, InvalidTokenParserException {
-        if (!initialized) {
+        if (!initialized && loadDefaultParsers) {
             addDefaultTokenParsers();
             initialized = true;
         }
@@ -62,6 +63,16 @@ public class PatternParser {
         }
 
         return resultPacket;
+    }
+
+    private static void addDefaultTokenParsers() {
+        try {
+            addTokenParser("Digit", (TokenParsers::parseDigit));
+            addTokenParser("Number", (TokenParsers::parseInteger));
+            addTokenParser("Char", (TokenParsers::parseChar));
+        } catch (InvalidTokenParserException e) {
+            e.printStackTrace();
+        }
     }
 
 }

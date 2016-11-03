@@ -16,12 +16,15 @@ public class TokenPattern {
         return this.tokens;
     }
 
-    public TokenPattern(String pattern) throws InvalidTokenParserException {
+    public TokenPattern(String pattern) {
         List<List<Integer>> tokenDelimiters = this.getTokenDelimiters(pattern);
 
-        //Should check if all the internal lists are the same size!
         if(tokenDelimiters == null) {
-            throw new InvalidTokenParserException("Error: Invalid pattern syntax, missing either an opening or closing token delimiter '}'!");
+            try {
+                throw new InvalidTokenParserException("Error: Invalid pattern syntax, missing either an opening or closing token delimiter '}'!");
+            } catch (InvalidTokenParserException e) {
+                e.printStackTrace();
+            }
         } else {
             for(int i = 0; i < tokenDelimiters.size(); i++) {
                 List<Integer> delimiters = tokenDelimiters.get(i);

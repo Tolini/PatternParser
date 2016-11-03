@@ -26,6 +26,10 @@ public class ResultPacket {
 
     public void addInt(String key, int value) { this.addObject(key, value); }
 
+    public void addChar(String key, char value) {
+        this.addObject(key, value);
+    }
+
     private Object getObject(String key) throws ResultPacketMismatchException {
         if(this.content.containsKey(key)) {
             return this.content.get(key);
@@ -43,6 +47,10 @@ public class ResultPacket {
     }
 
     public int getInt(String key) throws ResultPacketMismatchException { return (int) this.getObject(key); }
+
+    public char getChar(String key) throws ResultPacketMismatchException {
+        return (char) this.getObject(key);
+    }
 
     public String toString() {
         return this.content.values().toString();
