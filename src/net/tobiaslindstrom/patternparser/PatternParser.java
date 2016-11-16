@@ -54,7 +54,7 @@ public class PatternParser {
 
                 TokenParsingFunction tokenParser = tokenParsers.get(token.getType());
                 if (tokenParser != null) {
-                    parsedValueLength = tokenParser.tokenParse(stringToParse, token, resultPacket);
+                    parsedValueLength = tokenParser.tokenParse(stringToParse, token, resultPacket) + token.getEndMarker().length();
                     stringToParse = stringToParse.substring(parsedValueLength);
                 } else {
                     throw new InvalidTokenParserException("Error: No token parser was found for token type: \"" + token.getType() + "\"!");
@@ -67,9 +67,11 @@ public class PatternParser {
 
     private static void addDefaultTokenParsers() {
         try {
-            addTokenParser("Digit", (TokenParsers::parseDigit));
-            addTokenParser("Number", (TokenParsers::parseInteger));
-            addTokenParser("Char", (TokenParsers::parseChar));
+            addTokenParser("Digit", TokenParsers::parseDigit);
+            addTokenParser("Number", TokenParsers::parseInteger);
+            addTokenParser("Decimal", TokenParsers::parseDouble);
+            addTokenParser("Char", TokenParsers::parseChar);
+            addTokenParser("String", TokenParsers::parseString);
         } catch (InvalidTokenParserException e) {
             e.printStackTrace();
         }

@@ -51,9 +51,9 @@ A TokenParser is a function that parses a specific type of token. It takes the i
 The library comes with five TokenParsers:
 * Digit, which parses a single digit 0-9.
 * Number, which parses an integer.
-* Double, which parses a precision number fx. 10.5. Note that the punctuation mark is used as the decimal seperator.
+* Decimal, which parses a precision number fx. 10.5. Note that the punctuation mark is used as the decimal seperator.
 * Char, which parses a single alphabetic character.
-* String, which parses a string. Note that is no EndMarker is present the string will be split on a space unless it is contained by quotation marks `""`.
+* String, which parses a string. Note that if no EndMarker is present the string will be split on a space unless it is contained by quotation marks `""`.
 
 If the default parsers are not wanted they can be overwritten by added a new parser of the same type or to disable them all simply invoke the static function `PatternParser.shouldLoadDefaultParsers(false);`.
 
